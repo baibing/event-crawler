@@ -4,12 +4,12 @@ import fs from 'fs';
 import moment from 'moment';
 import csvWriter from 'csv-write-stream';
 const writer = csvWriter({ headers: [ "date", "title", "tag" ] });
-writer.pipe(fs.createWriteStream('out.csv'));
 
 // Can only query one year at a time since eventbrite doesn't have year information
 const queryYear = 2017;
 const startDate = `01%2F01%2F${queryYear}`;
 const endDate = (queryYear === 2017) ? moment().format('MM%2FD%2FY') : moment(`${queryYear}-12-31`).format('MM%2FD%2FY');
+writer.pipe(fs.createWriteStream(`${queryYear}-events.csv`));
 
 let options = {
   hostname: 'www.eventbrite.com',
